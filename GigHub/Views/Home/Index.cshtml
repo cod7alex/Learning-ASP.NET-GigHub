@@ -20,6 +20,9 @@
             <div class="details">
                 <span class="artist">
                     @gig.Artist.Name
+                    <a data-artist-id="@gig.Artist.Id" class="follow-link js-toggle-following">
+                        Follow
+                    </a>
                 </span>
                 <span class="genre">
                     @gig.Genre.Name
@@ -38,12 +41,26 @@
         $(document).ready(function () {
             $(".js-toggle-attendance").click(function (e) {
                 var button = e.target;
-                $.post("/api/attendances", { gigId: $(button).data("gig-id") }) 
+                $.post("/api/attendances", { gigId: $(button).data("gig-id") })
                 .done(function () {
                     $(button)
                         .removeClass("btn-default")
                         .addClass("btn-info")
                         .text("Going");
+                })
+                .fail(function () {
+                    alert("Something failed");
+                });
+            });
+
+            $(".js-toggle-following").click(function (e) {
+                var button = e.target;
+                $.post("/api/following", { artistId: $(button).data("artist-id") })
+                .done(function () {
+                    $(button)
+                        .removeClass("btn-default")
+                        .addClass("btn-info")
+                        .text("Following");
                 })
                 .fail(function () {
                     alert("Something failed");
