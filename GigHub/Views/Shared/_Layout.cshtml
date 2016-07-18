@@ -38,18 +38,17 @@
         </footer>
     </div>
 
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/lib")
     @RenderSection("scripts", required: false)
 
     <script type="text/x-template" id="notifications-template">
-        <ul>
+        <ul class="notifications-list">
             <%
             _.each(notifications, function(notification) {
                 if(notification.type == 1) {
                 %>
                 <li>
-                    <%= notification.gig.artist.name %> has cancelled the gig at <%= notification.gig.venue %> at <%= notification.gig.dateTime %>
+                    <span class="highlight"><%= notification.gig.artist.name %></span> has cancelled the gig at <%= notification.gig.venue %> at <%= moment(notification.gig.dateTime).format("D MMM HH:mm") %>
                 </li>
                 <%
                 }
@@ -65,13 +64,13 @@
                     }
                     if(notification.originalDateTime != notification.gig.dateTime) {
                         changes.push('date/time');
-                        originals.push(notification.originalDateTime);
-                        newVal.push(notification.gig.dateTime);
+                        originals.push(moment(notification.originalDateTime).format("D MMM HH:mm"));
+                        newVal.push(moment(notification.gig.dateTime).format("D MMM HH:mm"));
                     } %>
 
                     <li>
-                        <%= notification.gig.artist.name %> has changed <%= changes.join(" and ") %> 
-                        from <%= originals.join(" , ") %> to <%= newVal.join(" , ") %>
+                        <span class="highlight"><%= notification.gig.artist.name %></span> has changed <%= changes.join(" and ") %> 
+                        from <%= originals.join(", ") %> to <%= newVal.join(", ") %>
                     </li>
                 <%
                 }
@@ -98,7 +97,15 @@
                         var compiled = _.template($("#notifications-template").html());
                         return compiled({ notifications: notifications });
                     },
-                    placement: "bottom"
+                    placement: "bottom",
+                    template: '<div class="popover popover-notifications" role="tooltip"><div class="arrow"></div><h3 class="popover-title"></h3><div class="popover-content"></div></div>'
+                })
+                .on("shown.bs.popover", function () {
+                    var ids = notifications.map(function (current) { return current.id });
+                    $.post("api/notifications")
+                    .done(function () {
+                            $(".js-notifications-count").text("").addClass("hidden");
+                        });
                 });
             });
         });

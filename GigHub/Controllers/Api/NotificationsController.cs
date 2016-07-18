@@ -23,12 +23,27 @@ namespace GigHub.Controllers.Api
         {
             var userId = User.Identity.GetUserId();
             var notifications = _context.UserNotification
-                .Where(un => un.UserId == userId || un.IsRead == false)
+                .Where(un => un.UserId == userId && !un.IsRead)
                 .Select(un => un.Notification)
                 .Include(un => un.Gig.Artist)
                 .ToList();
 
             return notifications.Select(Mapper.Map<Notification, NotificationDto>);
+        }
+
+        [HttpPost]
+        public IHttpActionResult MarkAsRead()
+        {
+            var userId = User.Identity.GetUserId();
+            var notifications = _context.UserNotification
+                .Where(un => !un.IsRead && un.UserId == userId)
+                .ToList();
+
+            notifications.ForEach(un => un.Read());
+
+            _context.SaveChanges();
+
+            return Ok();
         }
     }
 }

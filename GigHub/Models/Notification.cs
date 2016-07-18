@@ -20,7 +20,6 @@ namespace GigHub.Models
 
         protected Notification()
         {
-
         }
 
         private Notification(Gig gig, NotificationType type)
