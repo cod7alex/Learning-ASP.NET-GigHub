@@ -88,6 +88,17 @@ textarea {
     font-weight: bold;
 }
 
+.navbar-inverse .notifications {
+    position: relative;
+}
+
+.navbar-inverse .notifications .badge {
+    position: absolute;
+    top: 8px;
+    right: 0;
+    background: #a80a0a;
+}
+
 h1,
 h2,
 h3,

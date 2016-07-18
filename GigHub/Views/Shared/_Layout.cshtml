@@ -41,5 +41,67 @@
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
+
+    <script type="text/x-template" id="notifications-template">
+        <ul>
+            <%
+            _.each(notifications, function(notification) {
+                if(notification.type == 1) {
+                %>
+                <li>
+                    <%= notification.gig.artist.name %> has cancelled the gig at <%= notification.gig.venue %> at <%= notification.gig.dateTime %>
+                </li>
+                <%
+                }
+                else if(notification.type == 2) {
+                    var changes = [];
+                    var originals = [];
+                    var newVal = [];
+
+                    if(notification.originalVenue != notification.gig.venue) {
+                        changes.push('venue');
+                        originals.push(notification.originalVenue);
+                        newVal.push(notification.gig.venue);
+                    }
+                    if(notification.originalDateTime != notification.gig.dateTime) {
+                        changes.push('date/time');
+                        originals.push(notification.originalDateTime);
+                        newVal.push(notification.gig.dateTime);
+                    } %>
+
+                    <li>
+                        <%= notification.gig.artist.name %> has changed <%= changes.join(" and ") %> 
+                        from <%= originals.join(" , ") %> to <%= newVal.join(" , ") %>
+                    </li>
+                <%
+                }
+            })
+            %>
+        </ul>
+    </script>
+
+    <script>
+        $(document).ready(function () {
+            $.getJSON("api/notifications", function (notifications) {
+                if (notifications.length == 0)
+                    return;
+
+                $(".js-notifications-count")
+                    .text(notifications.length)
+                    .removeClass("hidden")
+                    .addClass("animated bounceInDown");
+
+                $(".notifications").popover({
+                    html: true,
+                    title: "Notifications",
+                    content: function () {
+                        var compiled = _.template($("#notifications-template").html());
+                        return compiled({ notifications: notifications });
+                    },
+                    placement: "bottom"
+                });
+            });
+        });
+    </script>
 </body>
 </html>
