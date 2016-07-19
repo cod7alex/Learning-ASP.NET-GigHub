@@ -144,5 +144,36 @@ namespace GigHub.Controllers
         {
             return RedirectToAction("Index", "Home", new { query = viewModel.SearchTerm });
         }
+
+        public ActionResult Details(int id)
+        {
+            var gig = _context.Gigs
+                .Select(g => g)
+                .Include(g => g.Artist)
+                .Include(g => g.Artist.Followers)
+                .Include(g => g.Attendances)
+                .SingleOrDefault(g => g.Id == id);
+
+            if (gig == null)
+                return HttpNotFound();
+
+            var viewModel = new GigDetailsViewModel()
+            {
+                ArtistId = gig.ArtistId,
+                ArtistName = gig.Artist.Name,
+                Venue = gig.Venue,
+                DateTimeString = gig.DateTime.ToString("d MMM HH:mm", CultureInfo.InvariantCulture),
+            };
+
+            if (User.Identity.IsAuthenticated)
+            {
+                var userId = User.Identity.GetUserId();
+
+                viewModel.Going = gig.Attendances.Any(a => a.AttendeeId == userId);
+                viewModel.Following = gig.Artist.Followers.Any(f => f.FollowerId == userId);
+            }
+
+            return View(viewModel);
+        }
     }
 }
