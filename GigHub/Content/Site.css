@@ -105,6 +105,7 @@ h6,
   border-color: #2196f3;
   -webkit-box-shadow: none;
   box-shadow: none;
+  transition: none;
 }
 .btn {
   /*font-size: 17px;*/
@@ -177,4 +178,7 @@ h6,
 }
 .popover-notifications .notifications-list .highlight {
   font-weight: bold;
+}
+#searchGigs {
+  width: 300px;
 }
