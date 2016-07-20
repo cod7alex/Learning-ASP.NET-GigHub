@@ -1,4 +1,4 @@
-﻿using GigHub.Models;
+﻿using GigHub.Persistance;
 using Microsoft.AspNet.Identity;
 using System.Linq;
 using System.Web.Mvc;

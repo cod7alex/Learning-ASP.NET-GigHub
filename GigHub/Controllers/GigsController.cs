@@ -1,6 +1,6 @@
-﻿using GigHub.Models;
-using GigHub.Persistance;
-using GigHub.ViewModels;
+﻿using GigHub.Core;
+using GigHub.Core.Models;
+using GigHub.Core.ViewModels;
 using Microsoft.AspNet.Identity;
 using System.Globalization;
 using System.Linq;
@@ -11,14 +11,11 @@ namespace GigHub.Controllers
     [System.Runtime.InteropServices.Guid("CFB3FDDA-9153-4919-AFA4-1AC897C7215F")]
     public class GigsController : Controller
     {
-        private readonly ApplicationDbContext _context;
+        private readonly IUnitOfWork _unitOfWork;
 
-        private readonly UnitOfWork _unitOfWork;
-
-        public GigsController()
+        public GigsController(IUnitOfWork unitOfWork)
         {
-            _context = new ApplicationDbContext();
-            _unitOfWork = new UnitOfWork(_context);
+            _unitOfWork = unitOfWork;
         }
 
         [Authorize]
