@@ -2,6 +2,7 @@
 using GigHub.Core.Models;
 using GigHub.Core.ViewModels;
 using Microsoft.AspNet.Identity;
+using System;
 using System.Globalization;
 using System.Linq;
 using System.Web.Mvc;
@@ -15,6 +16,9 @@ namespace GigHub.Controllers
 
         public GigsController(IUnitOfWork unitOfWork)
         {
+            if (unitOfWork == null)
+                throw new ArgumentNullException(nameof(unitOfWork));
+
             _unitOfWork = unitOfWork;
         }
 

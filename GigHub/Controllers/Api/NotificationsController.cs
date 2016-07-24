@@ -1,10 +1,10 @@
 ﻿using AutoMapper;
+using GigHub.Core;
 using GigHub.Core.Dtos;
 using GigHub.Core.Models;
-using GigHub.Persistance;
 using Microsoft.AspNet.Identity;
+using System;
 using System.Collections.Generic;
-using System.Data.Entity;
 using System.Linq;
 using System.Web.Http;
 
@@ -13,20 +13,20 @@ namespace GigHub.Controllers.Api
     [Authorize]
     public class NotificationsController : ApiController
     {
-        private ApplicationDbContext _context;
+        private IUnitOfWork _unitOfWork;
 
-        public NotificationsController()
+        public NotificationsController(IUnitOfWork unitOfWork)
         {
-            _context = new ApplicationDbContext();
+            if (unitOfWork == null)
+                throw new ArgumentNullException(nameof(unitOfWork));
+
+            _unitOfWork = unitOfWork;
         }
 
         public IEnumerable<NotificationDto> GetNewNotifications()
         {
-            var userId = User.Identity.GetUserId();
-            var notifications = _context.UserNotification
-                .Where(un => un.UserId == userId && !un.IsRead)
-                .Select(un => un.Notification)
-                .Include(un => un.Gig.Artist)
+            var notifications = _unitOfWork.Notifications.
+                GetNotificationsWithArtist(User.Identity.GetUserId())
                 .ToList();
 
             return notifications.Select(Mapper.Map<Notification, NotificationDto>);
@@ -35,14 +35,13 @@ namespace GigHub.Controllers.Api
         [HttpPost]
         public IHttpActionResult MarkAsRead()
         {
-            var userId = User.Identity.GetUserId();
-            var notifications = _context.UserNotification
-                .Where(un => !un.IsRead && un.UserId == userId)
+            var notifications = _unitOfWork.Notifications.
+                GetUserNotifications(User.Identity.GetUserId())
                 .ToList();
 
             notifications.ForEach(un => un.Read());
 
-            _context.SaveChanges();
+            _unitOfWork.Complete();
 
             return Ok();
         }

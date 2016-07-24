@@ -50,6 +50,14 @@ namespace GigHub.Persistance.Repositories
                 .Include(g => g.Genre);
         }
 
+        public IEnumerable<Gig> GetUpcomingGigs()
+        {
+            return _context.Gigs
+                .Include(g => g.Artist)
+                .Include(g => g.Genre)
+                .Where(g => g.DateTime > DateTime.Now && !g.IsCanceled);
+        }
+
         public void AddGig(Gig gig)
         {
             _context.Gigs.Add(gig);
