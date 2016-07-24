@@ -261,6 +261,13 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Persistance\EntityConfigurations\AttendanceConfiguration.cs" />
+    <Compile Include="Persistance\EntityConfigurations\FollowingConfiguration.cs" />
+    <Compile Include="Persistance\EntityConfigurations\GenreConfiguration.cs" />
+    <Compile Include="Persistance\EntityConfigurations\GigConfiguration.cs" />
+    <Compile Include="Persistance\EntityConfigurations\NotificationConfiguration.cs" />
+    <Compile Include="Persistance\EntityConfigurations\UserConfiguration.cs" />
+    <Compile Include="Persistance\EntityConfigurations\UserNotificationConfiguration.cs" />
     <Compile Include="Persistance\Migrations\201606140820126_InitialModel.cs" />
     <Compile Include="Persistance\Migrations\201606140820126_InitialModel.Designer.cs">
       <DependentUpon>201606140820126_InitialModel.cs</DependentUpon>
@@ -304,6 +311,10 @@
     <Compile Include="Persistance\Migrations\201607091253490_FixNotificationColumnName.cs" />
     <Compile Include="Persistance\Migrations\201607091253490_FixNotificationColumnName.Designer.cs">
       <DependentUpon>201607091253490_FixNotificationColumnName.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Persistance\Migrations\201607241729270_Added GigId to Notification model.cs" />
+    <Compile Include="Persistance\Migrations\201607241729270_Added GigId to Notification model.Designer.cs">
+      <DependentUpon>201607241729270_Added GigId to Notification model.cs</DependentUpon>
     </Compile>
     <Compile Include="Persistance\Migrations\Configuration.cs" />
     <Compile Include="Persistance\ApplicationDbContext.cs" />
@@ -482,6 +493,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Persistance\Migrations\201607091253490_FixNotificationColumnName.resx">
       <DependentUpon>201607091253490_FixNotificationColumnName.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Persistance\Migrations\201607241729270_Added GigId to Notification model.resx">
+      <DependentUpon>201607241729270_Added GigId to Notification model.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
