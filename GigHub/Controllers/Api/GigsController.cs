@@ -1,7 +1,6 @@
 ﻿using GigHub.Core;
 using Microsoft.AspNet.Identity;
 using System;
-using System.Net;
 using System.Web.Http;
 
 namespace GigHub.Controllers.Api
@@ -28,7 +27,7 @@ namespace GigHub.Controllers.Api
                 return NotFound();
 
             if (gig.ArtistId != User.Identity.GetUserId())
-                throw new HttpResponseException(HttpStatusCode.BadRequest);
+                return Unauthorized();
 
             gig.Cancel();
 
