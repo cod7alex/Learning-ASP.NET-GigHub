@@ -10,6 +10,14 @@ namespace GigHub.Persistance.EntityConfigurations
             Property(u => u.Name)
                 .IsRequired()
                 .HasMaxLength(100);
+
+            HasMany(u => u.Followers)
+                .WithRequired(u => u.Artist)
+                .WillCascadeOnDelete(false);
+
+            HasMany(u => u.Followees)
+                .WithRequired(u => u.Follower)
+                .WillCascadeOnDelete(false);
         }
     }
 }

@@ -40,21 +40,6 @@ namespace GigHub.Persistance
                 .Add(new AttendanceConfiguration())
                 .Add(new FollowingConfiguration());
 
-            modelBuilder.Entity<ApplicationUser>()
-                .HasMany(u => u.Followers)
-                .WithRequired(u => u.Artist)
-                .WillCascadeOnDelete(false);
-
-            modelBuilder.Entity<ApplicationUser>()
-                .HasMany(u => u.Followees)
-                .WithRequired(u => u.Follower)
-                .WillCascadeOnDelete(false);
-
-            modelBuilder.Entity<UserNotification>()
-                .HasRequired(n => n.User)
-                .WithMany(u => u.UserNotifications)
-                .WillCascadeOnDelete(false);
-
             base.OnModelCreating(modelBuilder);
         }
     }

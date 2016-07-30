@@ -12,6 +12,10 @@ namespace GigHub.Persistance.EntityConfigurations
                 un.UserId,
                 un.NotificationId
             });
+
+            HasRequired(n => n.User)
+                .WithMany(u => u.UserNotifications)
+                .WillCascadeOnDelete(false);
         }
     }
 }
