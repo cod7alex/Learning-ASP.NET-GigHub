@@ -22,7 +22,7 @@ namespace GigHub.Core.Models
 
         public byte GenreId { get; set; }
 
-        public Genre Genre { get; private set; }
+        public Genre Genre { get; set; }
 
         public ICollection<Attendance> Attendances { get; private set; }
 
