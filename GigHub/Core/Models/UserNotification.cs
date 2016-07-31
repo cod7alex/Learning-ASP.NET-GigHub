@@ -27,7 +27,9 @@ namespace GigHub.Core.Models
                 throw new ArgumentNullException(nameof(notification));
 
             User = user;
+            UserId = user.Id;
             Notification = notification;
+            NotificationId = notification.Id;
         }
 
         public void Read()

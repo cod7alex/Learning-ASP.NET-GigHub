@@ -268,6 +268,7 @@
     <Compile Include="Persistance\EntityConfigurations\NotificationConfiguration.cs" />
     <Compile Include="Persistance\EntityConfigurations\UserConfiguration.cs" />
     <Compile Include="Persistance\EntityConfigurations\UserNotificationConfiguration.cs" />
+    <Compile Include="Persistance\IApplicationDbContext.cs" />
     <Compile Include="Persistance\Migrations\201606140820126_InitialModel.cs" />
     <Compile Include="Persistance\Migrations\201606140820126_InitialModel.Designer.cs">
       <DependentUpon>201606140820126_InitialModel.cs</DependentUpon>
@@ -325,7 +326,9 @@
     <Compile Include="Core\Models\UserNotification.cs" />
     <Compile Include="Core\IUnitOfWork.cs" />
     <Compile Include="Core\Repositories\INotificationRepository.cs" />
+    <Compile Include="Core\Repositories\IUserNotificationRepository.cs" />
     <Compile Include="Persistance\Repositories\NotificationRepository.cs" />
+    <Compile Include="Persistance\Repositories\UserNotificationRepository.cs" />
     <Compile Include="Persistance\UnitOfWork.cs" />
     <Compile Include="Persistance\Repositories\AttendanceRepository.cs" />
     <Compile Include="Persistance\Repositories\FollowingRepository.cs" />

@@ -14,6 +14,8 @@ namespace GigHub.Core
 
         INotificationRepository Notifications { get; }
 
+        IUserNotificationRepository UserNotifications { get; }
+
         void Complete();
     }
 }

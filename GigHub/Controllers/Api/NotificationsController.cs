@@ -35,7 +35,7 @@ namespace GigHub.Controllers.Api
         [HttpPost]
         public IHttpActionResult MarkAsRead()
         {
-            var notifications = _unitOfWork.Notifications.
+            var notifications = _unitOfWork.UserNotifications.
                 GetUserNotifications(User.Identity.GetUserId())
                 .ToList();
 
